@@ -1,21 +1,22 @@
-from __future__ import unicode_literals
 from django.db import models
-from django import forms
 from django.contrib.auth.models import User
-from django.utils import timezone
-from datetime import datetime
-# Create your models here.
 
-class Client(models.Model):
+
+class Card(models.Model):
     card_number = models.AutoField(primary_key=True)
     date_joined = models.DateField(null=False)
-    name=models.CharField(max_length=20)
-    surname=models.CharField(max_length=25)
-    email_address=models.EmailField()
-    points=models.IntegerField(default=0)
+    renewal_date = models.DateField(null=False)
 
-    class Meta:
-        ordering = ['name']
+class Profile(models.Model):
+    type_CHOICES = {
+        ("Client","Client"),
+        ("Partner", "Partner"),
+    }
+    id = models.AutoField(primary_key=True)
+    user=models.OneToOneField(User, on_delete=models.PROTECT)
+    account_type = models.CharField(choices = type_CHOICES,default = "Client", max_length=10)
+    card_number = models.OneToOneField(Card, on_delete=models.CASCADE,)
 
+    # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
-        return str(self.name)+ ' ' + str(self.surname) + '--'+ str(self.card_number)
+        return self.id

@@ -1,5 +1,23 @@
 {% extends 'discountCard/base.html' %}
 {% load static %}
 
-{%block body_block %} Partner !
+{%block body_block %}
+
+<br>
+{% if registered %}
+<h5 style="color:#000">Registration Complete!</h5>
+{% else %}
+<h5 style="color:#000">Become a Partner !</h5>
+
+<div class="col-md-6">
+    <form method="POST" class="profileRegisterForm" autocomplete="off" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        <button type="submit" name="submitBtn" class="save btn btn-default">Save</button>
+
+        <a class="btn btn-default"  role="button"> Cancel</a>
+    </form>
+</div>
+{% endif %}
+
 {% endblock %}

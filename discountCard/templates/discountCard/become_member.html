@@ -3,16 +3,21 @@
 
 {%block body_block %}
 
-Become A Member !
-
 <br>
+{% if registered %}
+    <h5 style="color:#000">Registration Complete!</h5>
+{% else %}
+    <h5 style="color:#000">Order Your Synolic International Discount Card!</h5>
 
-<div class="col-md-6">
-    <form method="POST" class="clientForm">{% csrf_token %}
-        {{ client_form }}
-        <button type="submit" name="submitBtn" class="save btn btn-default">Save</button>
+    <div class="col-md-6">
+        <form method="POST" class="profileRegisterForm" autocomplete="off" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            <button type="submit" name="submitBtn" class="save btn btn-default">Save</button>
 
-        <a class="btn btn-default" href="{% url 'index' %}" role="button"> Cancel</a>
-    </form>
-</div>
+            <a class="btn btn-default"  role="button"> Cancel</a>
+        </form>
+    </div>
+{% endif %}
+
 {% endblock %}
