@@ -73,3 +73,10 @@ def become_partner(request):
         'registered': registered,
         'context': context
     })
+
+def partners(request):
+    return render(request, 'discountCard/partners.html')
+
+
+def faq(request):
+    return render(request, 'discountCard/faq.html')

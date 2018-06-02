@@ -38,10 +38,11 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-10 justify-content-center">
                     <div class="btn-group">
-                        <button class="button">Partners</button>
-                        <button class="button">Order Your Card</button>
-                        <button class="button">Become A Partner</button>
-                        <button class="button">FAQ</button>
+                        <a href="{% url 'partners' %}" class="button">Partners</a>
+                        <a href="{% url 'become_member' %}" class="button">Get Your Card</a>
+                        <a href="{% url 'become_partner' %}" class="button">Become A Partner</a>
+                        <a href="{% url 'faq' %}" class="button">FAQ</a>
+
                     </div>
                 </div>
                 <div class="col-md-1"></div>
