@@ -1,6 +1,4 @@
 from django.http import HttpResponse
-from django.template import loader
-from django.shortcuts import render,redirect
 from discountCard.forms import  UserForm,LoginForm
 from discountCard.models import Card,Profile
 from datetime import date
@@ -9,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 
 
 def index(request):
@@ -129,3 +129,25 @@ def login(request):
 def logout(request):
     django_logout(request)
     return redirect('index')
+
+def user_account(request):
+    context = RequestContext(request)
+
+    if request.user.is_authenticated:
+        currentuser=request.user
+        renewal_d=currentuser.profile.card_number.renewal_date
+        expired=False
+        if renewal_d<date.today():
+            expired=-True
+        return render(request, 'discountCard/user_account.html',{'expired':expired},context)
+    else:
+        return redirect('login')
+
+def renew(request):
+    context = RequestContext(request)
+
+    if request.user.is_authenticated:
+
+        return render(request, 'discountCard/renew.html',{},context)
+    else:
+        return redirect('login')

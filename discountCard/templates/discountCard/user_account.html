@@ -1,0 +1,19 @@
+{% extends 'discountCard/base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+{%block body_block %}
+
+<br>
+
+    <div class="body_text">
+        Welcome  {{ user.username }} <br>
+        Expiry Date: {{user.profile.card_number.renewal_date}}
+        {% if expired %}
+            Expired
+            <button class="btn btn-danger" href="{% url 'renew' pk=user.profile %}">Renew</button>
+        {% endif %}
+    </div><br>
+
+
+{% endblock %}
