@@ -9,9 +9,10 @@
     <div class="body_text">
         Welcome  {{ user.username }} <br>
         Expiry Date: {{user.profile.card_number.renewal_date}}
+        {{expired}}
         {% if expired %}
             Expired
-            <button class="btn btn-danger" href="{% url 'renew' pk=user.profile %}">Renew</button>
+            <a class="btn btn-danger" href="{% url 'renew' %}">Renew</a>
         {% endif %}
     </div><br>
 

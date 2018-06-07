@@ -37,8 +37,9 @@ def become_member(request):
             profile.save()
 
             registered = True
+            return redirect('payment')
         else:
-            print(user_form.errors)
+                print(user_form.errors)
     else:
         user_form = UserForm()
     return render(request, 'discountCard/become_member.html', {
@@ -68,6 +69,7 @@ def become_partner(request):
             profile.save()
 
             registered = True
+            return redirect('payment')
         else:
             print(user_form.errors)
     else:
@@ -125,6 +127,11 @@ def login(request):
         login_form=LoginForm()
         return render(request, 'discountCard/login.html', {'login_form': login_form}, context)
 
+def payment(request):
+    context = RequestContext(request)
+    return render(request, 'discountCard/payment.html', {}, context)
+
+
 @login_required
 def logout(request):
     django_logout(request)
@@ -147,7 +154,11 @@ def renew(request):
     context = RequestContext(request)
 
     if request.user.is_authenticated:
-
-        return render(request, 'discountCard/renew.html',{},context)
+        currentuser=request.user
+        renewal_d=currentuser.profile.card_number.renewal_date
+        expired=False
+        if renewal_d<date.today():
+            expired=-True
+        return render(request, 'discountCard/renew.html',{'expired':expired},context)
     else:
         return redirect('login')

@@ -10,10 +10,10 @@
         Welcome  {{ user.username }} <br>
         Expiry Date: {{user.profile.card_number.renewal_date}}
         {% if expired %}
-            Expired
-            <button class="btn btn-danger" href="{% url 'renew' pk=user.profile %}">Renew</button>
+            renew
         {% else %}
             No need to renew!
+        {% endif %}
     </div><br>
 
 
