@@ -39,8 +39,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'user_account' %}">My Account</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'partners' %}">Partners</a>
+                    </li>
                 {% else %}
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'partners' %}">Partners</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'become_member' %}">Get Your Card</a>
                     </li>
@@ -50,6 +55,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Log In</a>
                     </li>
+
                 {% endif %}
             </ul>
         </div>
@@ -60,7 +66,18 @@
 <!-- Footer -->
 <footer class="py-5 bg-black">
     <div class="container">
-        <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2018</p>
+        <div class="row">
+            <div class="col-lg-4">
+                <p align="left" class="m-0  text-white small ">Contact Us: <br> +35725252525<br> discountcardh@gmail.com</p>
+            </div>
+            <div class="col-lg-4">
+
+            </div>
+            <div class="col-lg-4">
+                <br><p class="m-0 text-center text-white small">Copyright &copy; Synolic International 2018</p>
+            </div>
+        </div>
+
     </div>
 </footer>
 

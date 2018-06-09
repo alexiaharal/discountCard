@@ -18,11 +18,12 @@
 {% endblock %}
 
 {% block body_block %}
+<hr>
 <section>
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-4 order-lg-2">   </div>
-            <div class="col-lg-6 order-lg-1">
+            <div class="col-lg-3">   </div>
+            <div class="col-lg-6">
                     <form>
                         <label class="radio-inline">
                             <input type="radio"  onclick="showSales()" name="paymentsSelection">Show Previous Sales
@@ -32,25 +33,30 @@
                         </label>
                     </form>
             </div>
+            <div class="col-lg-3">   </div>
+
         </div>
     </div>
 </section>
-
+<hr>
 
 {% if partners %}
     {% for p in partners %}
         <section>
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-4 order-lg-2">
+                    <div class="col-lg-4 order-lg-1">
                         <div class="p-5">
-                            <img class="img-fluid rounded-circle" src="../../static/img/sample-image-1.jpg" alt="">
+                            <img class="img-fluid rounded-circle" src="../../static/img/partner_sample.jpg" alt="">
                         </div>
                     </div>
-                    <div class="col-lg-8 order-lg-1">
+                    <div class="col-lg-4 order-lg-2">
                         <div class="p-5">
-                            <h3 class="display-4"> {{p.username }}    </h3>
-
+                            <h3 class="display-5"> {{p.username }}    </h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 order-lg-3">
+                        <div class="p-5">
                             {{p.first_name }}
 
                             {{p.last_name }}
