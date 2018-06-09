@@ -34,17 +34,23 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                        <a class="nav-link" href="{% url 'partners' %}">Partners</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'user_account' %}">My Account</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'partners' %}">Partners</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'partners' %}">Partners</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'become_member' %}">Get Your Card</a>
