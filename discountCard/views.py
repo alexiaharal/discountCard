@@ -81,7 +81,11 @@ def become_partner(request):
     })
 
 def partners(request):
-    return render(request, 'discountCard/partners.html')
+    context = RequestContext(request)
+    current_partners=[]
+    for partner in User.objects.filter(profile__account_type="Partner"):
+        current_partners.append(partner)
+    return render(request, 'discountCard/our_partners.html',{'context':context,'partners':current_partners})
 
 
 def faq(request):

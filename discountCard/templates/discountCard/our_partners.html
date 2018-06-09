@@ -1,0 +1,68 @@
+{% extends 'discountCard/base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+{% block header %}
+
+<header class="masthead text-center text-white">
+    <div class="masthead-content">
+        <div class="container">
+            <h2 class="masthead-subheading mb-0">Check Out Places You Can Get Discount !</h2>
+        </div>
+    </div>
+    <div class="bg-circle-1 bg-circle"></div>
+    <div class="bg-circle-2 bg-circle"></div>
+    <div class="bg-circle-3 bg-circle"></div>
+    <div class="bg-circle-4 bg-circle"></div>
+</header>
+{% endblock %}
+
+{% block body_block %}
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-4 order-lg-2">   </div>
+            <div class="col-lg-6 order-lg-1">
+                    <form>
+                        <label class="radio-inline">
+                            <input type="radio"  onclick="showSales()" name="paymentsSelection">Show Previous Sales
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio"  onclick="hideSales()" name="paymentsSelection">Hide Previous Sales
+                        </label>
+                    </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% if partners %}
+    {% for p in partners %}
+        <section>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 order-lg-2">
+                        <div class="p-5">
+                            <img class="img-fluid rounded-circle" src="../../static/img/sample-image-1.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-8 order-lg-1">
+                        <div class="p-5">
+                            <h3 class="display-4"> {{p.username }}    </h3>
+
+                            {{p.first_name }}
+
+                            {{p.last_name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    {% endfor %}
+{% else %}
+    <h5 >No partners at this time! Please check it out later! </h5>
+{% endif %}
+
+{% endblock %}
