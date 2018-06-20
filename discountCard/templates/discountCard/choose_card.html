@@ -1,0 +1,70 @@
+{% extends 'discountCard/base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+{% block header %}
+
+<header class="masthead text-center text-white">
+    <div class="masthead-content">
+        <div class="container">
+            <h1 class="masthead-heading mb-0">Get Your Own Card Now!</h1>
+        </div>
+
+    </div>
+
+
+</header>
+<section>
+    <div class="row">
+        <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
+        <div class="col-xs-8 col-sm-8 col-lg-4">
+            <hr><h5>You are now registered.</h5>
+            <h5>Please proceed with the payment to order your card!</h5><hr>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
+    </div>
+
+</section>
+
+<section>
+    <div class="row">
+        <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
+        <div class="col-xs-8 col-sm-8 col-lg-4">
+            <form method="POST" class="profileRegisterForm" autocomplete="off" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ card_form|bootstrap }}
+                <button type="submit" name="submitBtn" class="save btn btn-default">Proceed To Payment</button>
+            </form>
+            <a class="btn btn-default" href="{% url 'user_account' %}" role="button"> Cancel</a>
+            <hr>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
+    </div>
+
+</section>
+
+<!--<div class="row">-->
+    <!--<div class="col-xs-2 col-sm-2 col-lg-4">    </div>-->
+    <!--<div class="col-xs-8 col-sm-8 col-lg-4">-->
+        <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">-->
+            <!--<input type="hidden" name="cmd" value="_s-xclick">-->
+            <!--<input type="hidden" name="hosted_button_id" value="39LK84U7LQGYL">-->
+            <!--<table>-->
+                <!--<tr><td><input type="hidden" name="on0" value="Subscription Period">Subscription Period</td></tr><tr><td><select name="os0">-->
+                <!--<option value="3 Month">3 Month €2.00 EUR</option>-->
+                <!--<option value="6 Month">6 Month €70.00 EUR</option>-->
+                <!--<option value="Yearly">Yearly €100.00 EUR</option>-->
+            <!--</select> </td></tr>-->
+            <!--</table>-->
+            <!--<input type="hidden" name="currency_code" value="EUR">-->
+            <!--<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">-->
+            <!--<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">-->
+        <!--</form>-->
+    <!--</div>-->
+    <!--<div class="col-xs-2 col-sm-2 col-lg-4">    </div>-->
+<!--</div>-->
+
+
+
+{% endblock %}
+

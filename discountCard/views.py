@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from discountCard.forms import  UserForm,LoginForm
+from discountCard.forms import  UserForm,LoginForm,CardForm
 from discountCard.models import Card,Profile
 from datetime import date
 from django.template.context import RequestContext
@@ -9,7 +9,7 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
-
+from django.contrib import messages
 
 def index(request):
     return render(request, 'discountCard/index.html')
@@ -20,24 +20,38 @@ def become_member(request):
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         if user_form.is_valid() :
+            #Store fields into variables
+            username = user_form.cleaned_data['username']
+            password = user_form.cleaned_data['password']
+            confirm_password = user_form.cleaned_data['confirm_password']
+            firstname= user_form.cleaned_data['firstname']
+            lastname = user_form.cleaned_data['lastname']
+            email = user_form.cleaned_data['email']
+            phone = user_form.cleaned_data['phone']
+            address = user_form.cleaned_data['address']
+            city = user_form.cleaned_data['city']
+            country = user_form.cleaned_data['country']
+           # card_type = user_form.cleaned_data['card_type']
+
             #Create user instance
-            user = user_form.save()
-            user.set_password(user.password)
+
+            user = User(username=username, password=password, first_name=firstname, last_name=lastname, email=email)
+            #user.set_password(user.password)
             user.save()
 
-            #Create card instance
-            renewal_period=1
-            print(date)
-            #r_date=date.replace(year = date.year + renewal_period)
-            new_card = Card(date_joined= date.today(), renewal_date=date.today())
-            new_card.save()
-
             #Create Profile instance
-            profile = Profile(user=user,card_number=new_card,account_type='Client')
+            profile = Profile(user=user,account_type='Client',phone= phone, address=address,city=city,country=country)
             profile.save()
 
+            # #Create card instance
+            # renewal_period=1
+            # #r_date=date.replace(year = date.year + renewal_period)
+            # new_card = Card(date_joined= date.today(), renewal_date=date.today(),owner=profile,card_type=card_type)
+            # new_card.save()
+
             registered = True
-            return redirect('payment')
+            auth_login(request, user)
+            return redirect('choose_card')
         else:
                 print(user_form.errors)
     else:
@@ -47,38 +61,51 @@ def become_member(request):
         'registered': registered,
         'context': context
     })
+
+
 def become_partner(request):
     context = RequestContext(request)
     registered=False
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         if user_form.is_valid() :
-        #Create user instance
-            user = user_form.save()
-            user.set_password(user.password)
+            #Store fields into variables
+            username = user_form.cleaned_data['username']
+            password = user_form.cleaned_data['password']
+            confirm_password = user_form.cleaned_data['confirm_password']
+            firstname= user_form.cleaned_data['firstname']
+            lastname = user_form.cleaned_data['lastname']
+            email = user_form.cleaned_data['email']
+            phone = user_form.cleaned_data['phone']
+            address = user_form.cleaned_data['address']
+            city = user_form.cleaned_data['city']
+            country = user_form.cleaned_data['country']
+            #card_type = user_form.cleaned_data['card_type']
+
+            #Create user instance
+
+            user = User(username=username, password=password, first_name=firstname, last_name=lastname, email=email)
+            #user.set_password(user.password)
             user.save()
 
-        #Create card instance
-            renewal_period=1
-            #r_date=date.replace(year = date.year + renewal_period)
-            new_card = Card(date_joined= date.today(), renewal_date=date.today())
-            new_card.save()
-
-        #Create Profile instance
-            profile = Profile(user=user,card_number=new_card,account_type='Partner')
+            #Create Profile instance
+            profile = Profile(user=user,account_type='Partner',phone= phone, address=address,city=city,country=country)
             profile.save()
 
+
+
             registered = True
-            return redirect('payment')
+            return redirect('choose_card')
         else:
             print(user_form.errors)
     else:
         user_form = UserForm()
-    return render(request,'discountCard/become_partner.html', {
+    return render(request, 'discountCard/become_member.html', {
         'user_form': user_form,
         'registered': registered,
         'context': context
     })
+
 
 def partners(request):
     context = RequestContext(request)
@@ -131,9 +158,31 @@ def login(request):
         login_form=LoginForm()
         return render(request, 'discountCard/login.html', {'login_form': login_form}, context)
 
-def payment(request):
+def choose_card(request):
     context = RequestContext(request)
-    return render(request, 'discountCard/payment.html', {}, context)
+
+    if request.method == 'POST':
+        card_form = CardForm(data=request.POST)
+        if card_form.is_valid():
+            card_type=card_form.cleaned_data['card_type']
+            card_period=card_form.cleaned_data['card_period']
+            current_profile = Profile.objects.get(user=request.user)
+
+            #Create card instance
+            renewal_period=1
+            #r_date=date.today.replace(year = date.today.year + renewal_period)
+            new_card = Card(date_joined= date.today(), renewal_date=date.today(),owner=current_profile, card_type=card_type)
+            new_card.save()
+            return redirect('user_account')
+        else:
+            print(card_form.errors)
+    else:
+        card_form=CardForm()
+        return render(request, 'discountCard/choose_card.html', {'card_form':card_form}, context)
+
+def register_card(request):
+    user = request.user
+    return render(request, 'discountCard/register_card.html',{'user':user})
 
 
 @login_required
@@ -145,12 +194,19 @@ def user_account(request):
     context = RequestContext(request)
 
     if request.user.is_authenticated:
-        currentuser=request.user
-        renewal_d=currentuser.profile.card_number.renewal_date
+        hascard=False
         expired=False
-        if renewal_d<date.today():
-            expired=-True
-        return render(request, 'discountCard/user_account.html',{'expired':expired},context)
+        currentuser=request.user
+        renewal_d=date.today
+        card=""
+        for card in Card.objects.all():
+            if card.owner==currentuser.profile:
+                card = (Card.objects.get(owner=Profile.objects.get(user=request.user)))
+                renewal_d=(Card.objects.get(owner=Profile.objects.get(user=request.user))).renewal_date
+                hascard=True
+                if renewal_d<date.today():
+                    expired=-True
+        return render(request, 'discountCard/user_account.html',{'user':currentuser,'hascard':hascard,'card':card,'expired':expired, 'renewal_date':renewal_d},context)
     else:
         return redirect('login')
 
