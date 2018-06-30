@@ -48,7 +48,9 @@ class Card(models.Model):
     renewal_date = models.DateField(null=False)
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE,default="")
     card_type = models.CharField(choices = type_CHOICES,max_length=30,default="")
-
+    expired = models.BooleanField(default=False)
+    active = models.BooleanField(default = False)
+    reminder_send = models.BooleanField(default = False)
     # Override the __unicode__() method to return out something meaningful!
     def __str__(self):
         return str(self.card_number)

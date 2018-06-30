@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
             <div class="col-xs-8 col-sm-8 col-lg-4">
-                <hr><h5>Please Log Out of your account to order more cards.</h5><hr>
+                <hr><h5>You are already a member for this site. Please log out to register a new account.</h5><hr>
             </div>
             <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
         </div>
@@ -43,9 +43,8 @@
                         <form method="POST" class="profileRegisterForm" autocomplete="off" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ user_form|bootstrap }}
-
-
-                            <button type="submit" name="submitBtn" class="save btn btn-default">Proceed To Payment</button>
+                            <button type="submit" name="submitBtn" style="float:right;" class="save btn btn-primary rounded-pill ">Register</button>
+                            <a href="{% url 'user_account' %}" class="btn btn-primary rounded-pill ">Cancel</a>
                         </form>
                     </div>
                     <div class="col-xs-2 col-sm-2 col-lg-4"></div>

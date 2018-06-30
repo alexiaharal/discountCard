@@ -144,11 +144,19 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'discountCard',
+    'discountCard.apps.DiscountcardConfig',
     'bootstrapform',
 
 
 )
+
+# Email settings
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'discountcardh@gmail.com'
+EMAIL_HOST_PASSWORD = 'strBA18alex'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 

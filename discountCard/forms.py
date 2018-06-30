@@ -4,6 +4,9 @@ from django.forms import ModelForm
 from django import forms
 from discountCard.models import  Profile
 from django.contrib.auth.models import User
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import authenticate, login, logout
+
 
 class UserForm(forms.Form):
 
@@ -16,7 +19,7 @@ class UserForm(forms.Form):
     phone = forms.CharField(label='Phone Number')
     address = forms.CharField(label='Address')
     city = forms.CharField(label='City')
-    country = forms.CharField(label='First Name')
+    country = forms.CharField(label='Country')
 
     def clean_email(self):
         # Get the email
@@ -55,9 +58,22 @@ class CardForm(forms.Form):
         ("Year", "Year"),
     }
     card_type = forms.ChoiceField(choices = type_CHOICES, label='Card Type')
-    card_period = forms.ChoiceField(choices = period_CHOICES, label = 'Card Issue Period')
+    #card_period = forms.ChoiceField(choices = period_CHOICES, label = 'Card Issue Period')
 
 
 class LoginForm(forms.Form):
     username= forms.CharField(label='Username', max_length=30)
     password = forms.CharField(label='Password',widget=forms.PasswordInput())
+
+
+class RegisterCardForm(forms.Form):
+    type_CHOICES= {
+        ("Synolic Personal","Synolic Personal"),
+        ("Synolic Corporate", "Synolic Corporate"),
+        ("Synolic Visitors", "Synolic Visitors"),
+        ("Synolic Youth", "Synolic Youth"),
+    }
+    number = forms.CharField(label='Card Number')
+    card_type = forms.ChoiceField(choices = type_CHOICES, label='Card Type')
+    #card_period = forms.ChoiceField(choices = period_CHOICES, label = 'Card Issue Period')
+

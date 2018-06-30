@@ -7,7 +7,7 @@
 <header class="masthead text-center text-white">
     <div class="masthead-content">
         <div class="container">
-            <h1 class="masthead-heading mb-0">Get Your Own Card Now!</h1>
+            <h1 class="masthead-heading mb-0">Register Your Card Now!</h1>
         </div>
 
     </div>
@@ -18,7 +18,6 @@
     <div class="row">
         <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
         <div class="col-xs-8 col-sm-8 col-lg-4">
-            <hr><h5>You are now registered.</h5>
             <h5>Please enter your card details to register your card!</h5><hr>
         </div>
         <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
@@ -28,11 +27,22 @@
 
 <section>
     <div class="row">
-        <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
-        <div class="col-xs-8 col-sm-8 col-lg-4">
-
-        </div>
-        <div class="col-xs-2 col-sm-2 col-lg-4">    </div>
+        <div class="col-xs-1 col-sm-2 col-lg-3">    </div>
+        <div class="col-xs-10 col-sm-8 col-lg-6">
+            {% if wrong_card_type %}
+                <hr><h5 style="color: #E63A3A;">Card Type Does Not Match Purchased Card's Type</h5>
+            {% endif %}
+            {% if wrong_card_number %}
+                <hr><h5 style="color: #E63A3A;">Invalid Card Number </h5>
+            {% endif %}
+            <form method="POST" class="profileRegisterForm" autocomplete="off" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ register_form|bootstrap }}
+                <button type="submit" name="submitBtn" style="float:right;" class="save btn btn-primary rounded-pill ">Register</button>
+                <a href="{% url 'user_account' %}" class="btn btn-primary rounded-pill ">Cancel</a>
+            </form>
+         </div>
+        <div class="col-xs-1 col-sm-2 col-lg-3">    </div>
     </div>
 
 </section>
